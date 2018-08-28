@@ -137,6 +137,7 @@ function computeDefaults(schema, parentDefaults, definitions = {}) {
   switch (schema.type) {
     // We need to recur for object schema inner default values.
     case "object":
+    case "bootstrap":
       return Object.keys(schema.properties || {}).reduce((acc, key) => {
         // Compute the defaults for this node, with the parent defaults we might
         // have from a previous run: defaults[key].
@@ -215,6 +216,10 @@ export function getUiOptions(uiSchema) {
 
 export function isObject(thing) {
   return typeof thing === "object" && thing !== null && !Array.isArray(thing);
+}
+
+function notTypeObjectOrBootstrap(a) {
+  a !== "object" && a !== "bootstrap";
 }
 
 export function mergeObjects(obj1, obj2, concatArrays = false) {
@@ -636,7 +641,7 @@ export function toIdSchema(
   if ("items" in schema && !schema.items.$ref) {
     return toIdSchema(schema.items, id, definitions, formData, idPrefix);
   }
-  if (schema.type !== "object") {
+  if (notTypeObjectOrBootstrap(schema.type)) {
     return idSchema;
   }
   for (const name in schema.properties || {}) {

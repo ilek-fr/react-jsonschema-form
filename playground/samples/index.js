@@ -1,4 +1,5 @@
 import arrays from "./arrays";
+import bootstrap from "./bootstrap";
 import nested from "./nested";
 import numbers from "./numbers";
 import simple from "./simple";
@@ -20,6 +21,7 @@ import schemaDependencies from "./schemaDependencies";
 
 export const samples = {
   Simple: simple,
+  bootstrap: bootstrap,
   Nested: nested,
   Arrays: arrays,
   Numbers: numbers,
